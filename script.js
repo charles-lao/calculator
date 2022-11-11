@@ -14,6 +14,10 @@ function divide(x, y) {
     return x / y;
 }
 
+function operate(operator, x, y) {
+    
+}
+
 console.log(add(1, 2));
 console.log(subtract(1, 2));
 console.log(multiply(1, 2));
