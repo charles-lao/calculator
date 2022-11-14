@@ -10,6 +10,7 @@ a:link {
 
 h3 {
     font-weight: bolder;
+    font-size: 130%;
 }
 
 body {
@@ -26,31 +27,32 @@ header {
     flex-direction: row;
 }
 
-#nav-left, #nav-right {
+#nav-center {
     display: flex;
     flex: 1;
+    justify-content: center;
 }
 
-#app-container {
-    
+#app-container { 
     display: flex;
     color: #eaecec;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
 }
 
 #app {
-    border: 2px solid #bab8b8;
+    border: 1px solid #bab8b8;
+    border-radius: 3%;
+    padding: 5px;
 }
 
 #display {
-    height: 70px;
+    height: 80px;
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-    font-size: x-large;
+    font-size: 200%;
     font-weight: bolder;
     padding-right: 5px;
     padding-bottom: 5px;
@@ -66,12 +68,17 @@ header {
     justify-content: flex-end;
 }
 
-
 .orange-btns, .white-btns, .grey-btns {
-    border-radius: 50%;
-    padding: 25px;
+    border-radius: 45%;
+    padding: 25px 30px;
     font-size: 120%;
     font-weight: bolder;
+    margin: 2px;
+}
+
+.wide-btns {
+    flex: 2;
+    border-radius: 40%;
 }
 
 .orange-btns {
