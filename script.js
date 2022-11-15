@@ -15,7 +15,30 @@ function divide(x, y) {
 }
 
 function operate(operator, x, y) {
-    alert(x+' '+operator+ ' '+y);
+    switch(operator) {
+        case '+':
+            updateDisplay(add(x, y));
+            storedVal = currDisplayVal;
+            resetValues();
+            break;
+        case '-':
+            updateDisplay(subtract(x,y));
+            storedVal = currDisplayVal;
+            resetValues();
+            break;
+        case 'x':
+            updateDisplay(multiply(x,y));
+            storedVal = currDisplayVal;
+            resetValues();
+            break;
+        case '/':
+            updateDisplay(divide(x,y));
+            storedVal = currDisplayVal;
+            resetValues();
+            break;
+        default:
+            break;
+    }
 }
 
 function clearDisplay() {
@@ -23,16 +46,28 @@ function clearDisplay() {
     currDisplayVal = '';
 }
 
+function updateDisplay(value){
+    currDisplayVal = value;
+    display.textContent = value;
+}
+
+function resetValues(){
+    x = undefined;
+    y = undefined;
+    currOperation = undefined;
+}
+
 let currDisplayVal;
 let currOperation;
 let x;
 let y;
+let storedVal;
 
 
 const display = document.querySelector("#display");
 
 const clearBtn = document.querySelector("#clear-btn");
-clearBtn.addEventListener('click', clearDisplay);
+clearBtn.addEventListener('click', clearDisplay, resetValues);
 
 const numBtns = document.querySelectorAll(".grey-btns");
 numBtns.forEach((numBtn) => {
@@ -46,16 +81,26 @@ const operateBtns = document.querySelectorAll(".orange-btns");
 operateBtns.forEach((operateBtn) => {
     operateBtn.addEventListener('click', () => {
 
-        let operation = operateBtn.value 
-        if(operation != '='){
-            x = currDisplayVal;
+        let operation = operateBtn.value
+        if(operation !== '=' && x === undefined){
+            x = Number(currDisplayVal);
             currOperation = operation;
             clearDisplay();
-        } else {
-            y = currDisplayVal;
-            clearDisplay();
+        } else if (operation !== '=' && y === undefined) {
+            y = Number(currDisplayVal);
             operate(currOperation, x, y);
-
+            clearDisplay();
+        } else if (operation !== '=' && storedVal !== undefined) {
+            x = storedVal;
+            y = Number(currDisplayVal);
+            operate(currOperation, x, y);
+            clearDisplay();
+            alert(storedVal);
+        } else if (operation === '=') {
+            //alert('Equals is pressed');
+            y = Number(currDisplayVal);
+            operate(currOperation, x, y);
+            
         }
     });
 });
