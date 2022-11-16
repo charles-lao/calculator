@@ -76,7 +76,7 @@ function decimalFilter(result){
     if((result%1) === 0){
         return result
     } else {
-        return (x + y).toFixed(2);
+        return result.toFixed(2);
     }
 }
 
