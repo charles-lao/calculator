@@ -6,19 +6,19 @@ let storedVal;
 let prevOperation;
 
 function add(x, y) {
-    return (x + y).toFixed(2);
+    return decimalFilter(x+y);
 }
 
 function subtract(x, y) {
-    return (x - y).toFixed(2);
+    return decimalFilter(x-y);
 }
 
 function multiply(x, y) {
-    return (x * y).toFixed(2);
+    return decimalFilter(x * y);
 }
 
 function divide(x, y) {
-    return (x / y).toFixed(2);
+    return decimalFilter(x / y);
 }
 
 function operate(operator, x, y) {
@@ -36,6 +36,12 @@ function operate(operator, x, y) {
             storedVal = multiply(x, y);         
             break;
         case '/':
+            if(y === 0){
+                alert("ERROR! Unable to divide by Zero. Please enter another number.");
+                clearDisplay();
+                resetValues();
+                break;
+            }
             updateDisplay(divide(x, y));
             storedVal = divide(x, y);
             break;
@@ -62,6 +68,16 @@ function resetValues(){
     y = undefined;
     currOperation = undefined;
     storedVal = undefined;
+}
+
+//checks if num is whole number and appends decimals if false
+function decimalFilter(result){
+
+    if((result%1) === 0){
+        return result
+    } else {
+        return (x + y).toFixed(2);
+    }
 }
 
 const display = document.querySelector("#display");
