@@ -80,6 +80,22 @@ function decimalFilter(result){
     }
 }
 
+//checks if there's a period on the display already
+function periodFilter(string){
+
+    if(currDisplayVal !== undefined){
+        string = string.toString();
+
+        if(string.includes('.')){
+            return true;
+        } else {
+            false;
+        }
+    }
+    
+    
+}
+
 const display = document.querySelector("#display");
 
 const clearBtn = document.querySelector("#clear-btn");
@@ -91,8 +107,21 @@ clearBtn.addEventListener('click', () => {
 const numBtns = document.querySelectorAll(".grey-btns");
 numBtns.forEach((numBtn) => {
     numBtn.addEventListener('click', () => {
-        display.textContent += numBtn.value;
-        currDisplayVal = Number(display.textContent);
+
+
+        //does a period check
+        if(numBtn.value == '.'){
+            if(periodFilter(display.textContent)){
+                //do nothing if there is a period already
+            } else {
+                display.textContent += numBtn.value;
+                currDisplayVal = Number(display.textContent);
+            }
+        } else {
+            display.textContent += numBtn.value;
+            currDisplayVal = Number(display.textContent);
+        }
+        
         
     });
 });
