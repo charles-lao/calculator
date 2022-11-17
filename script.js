@@ -37,7 +37,7 @@ function operate(operator, x, y) {
             break;
         case '/':
             if(y === 0){
-                alert("ERROR! Unable to divide by Zero. Please enter another number.");
+                alert("ERROR! Unable to divide by Zero. Please try again.");
                 clearDisplay();
                 resetValues();
                 break;
@@ -91,9 +91,7 @@ function periodFilter(string){
         } else {
             false;
         }
-    }
-    
-    
+    }   
 }
 
 const display = document.querySelector("#display");
@@ -108,7 +106,6 @@ const numBtns = document.querySelectorAll(".grey-btns");
 numBtns.forEach((numBtn) => {
     numBtn.addEventListener('click', () => {
 
-
         //does a period check
         if(numBtn.value == '.'){
             if(periodFilter(display.textContent)){
@@ -121,7 +118,6 @@ numBtns.forEach((numBtn) => {
             display.textContent += numBtn.value;
             currDisplayVal = Number(display.textContent);
         }
-        
         
     });
 });

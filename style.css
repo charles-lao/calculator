@@ -47,7 +47,7 @@ header {
 }
 
 #display {
-    height: 80px;
+    height: 90px;
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
@@ -92,4 +92,11 @@ header {
 .grey-btns {
     background-color: #534e4e;
 }
+
+footer {
+    display: flex;
+    justify-content: center;
+    font-size: smaller;
+}
+
 
