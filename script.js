@@ -31,7 +31,11 @@ function operate(operator, x, y) {
             updateDisplay(subtract(x, y));
             storedVal = subtract(x, y);     
             break;
-        case 'X':
+        case 'x':
+            updateDisplay(multiply(x, y));
+            storedVal = multiply(x, y);         
+            break;
+        case '*':
             updateDisplay(multiply(x, y));
             storedVal = multiply(x, y);         
             break;
@@ -53,6 +57,51 @@ function operate(operator, x, y) {
     }
 }
 
+function inputNumber(numKey){
+
+    //does a period check
+    if(numKey == '.'){
+        if(periodFilter(display.textContent)){
+            //do nothing if there is a period already
+        } else {
+            display.textContent += numKey;
+            currDisplayVal = Number(display.textContent);
+        }
+    } else {
+        display.textContent += numKey;
+        currDisplayVal = Number(display.textContent);
+    }
+}
+
+function startOperation(operation) {
+
+    currOperation = operation;
+    if(operation !== '=' && x === undefined){
+        x = currDisplayVal;
+        clearDisplay();
+        prevOperation = currOperation;
+    } else if (operation !== '=' && y === undefined) {
+        y = currDisplayVal;
+        operate(prevOperation, x, y);
+        prevOperation = currOperation;
+        clearDisplay();
+    } else if (operation !== '=' && x !== undefined && y !== undefined) {
+        x = storedVal;
+        y = currDisplayVal;
+        operate(prevOperation, x, y);
+        prevOperation = operation;
+        clearDisplay();
+    } else if (operation === '=') {
+        if(storedVal !== undefined){
+            x = storedVal;
+        }
+        y = currDisplayVal;
+        operate(prevOperation, x, y);
+        resetValues();
+    }
+
+}
+
 function clearDisplay() {
     display.textContent = '';
     currDisplayVal = '';
@@ -68,6 +117,7 @@ function resetValues(){
     y = undefined;
     currOperation = undefined;
     storedVal = undefined;
+    prevOperation = undefined;
 }
 
 //checks if num is whole number and appends decimals if false
@@ -94,6 +144,18 @@ function periodFilter(string){
     }   
 }
 
+//delete last character from string
+function backSpace() {
+
+    if(currDisplayVal !== undefined && display.textContent !== undefined) {
+        let screenDisplay = display.textContent;
+
+        currDisplayVal = currDisplayVal.toString();
+        currDisplayVal = Number(currDisplayVal.slice(0, -1));
+        display.textContent = screenDisplay.slice(0, -1);
+    } 
+}
+
 const display = document.querySelector("#display");
 
 const clearBtn = document.querySelector("#clear-btn");
@@ -106,31 +168,15 @@ clearBtn.addEventListener('click', () => {
 const delBtn = document.querySelector('#del-btn');
 delBtn.addEventListener('click', () => {
     
-    if(currDisplayVal !== undefined && display.textContent !== undefined) {
-        let screenDisplay = display.textContent;
-
-        currDisplayVal = currDisplayVal.toString();
-        currDisplayVal = Number(currDisplayVal.slice(0, -1));
-        display.textContent = screenDisplay.slice(0, -1);
-    }  
+    backSpace();
+     
 });
 
 const numBtns = document.querySelectorAll(".grey-btns");
 numBtns.forEach((numBtn) => {
     numBtn.addEventListener('click', () => {
 
-        //does a period check
-        if(numBtn.value == '.'){
-            if(periodFilter(display.textContent)){
-                //do nothing if there is a period already
-            } else {
-                display.textContent += numBtn.value;
-                currDisplayVal = Number(display.textContent);
-            }
-        } else {
-            display.textContent += numBtn.value;
-            currDisplayVal = Number(display.textContent);
-        }
+        inputNumber(numBtn.value);
         
     });
 });
@@ -139,30 +185,33 @@ const operateBtns = document.querySelectorAll(".orange-btns");
 operateBtns.forEach((operateBtn) => {
     operateBtn.addEventListener('click', () => {
 
-        let operation = operateBtn.value
-        currOperation = operation;
-        if(operation !== '=' && x === undefined){
-            x = currDisplayVal;
-            clearDisplay();
-            prevOperation = currOperation;
-        } else if (operation !== '=' && y === undefined) {
-            y = currDisplayVal;
-            operate(prevOperation, x, y);
-            prevOperation = currOperation;
-            clearDisplay();
-        } else if (operation !== '=' && x !== undefined && y !== undefined) {
-            x = storedVal;
-            y = currDisplayVal;
-            operate(prevOperation, x, y);
-            prevOperation = operation;
-            clearDisplay();
-        } else if (operation === '=') {
-            if(storedVal !== undefined){
-                x = storedVal;
-            }
-            y = currDisplayVal;
-            operate(prevOperation, x, y);
-            resetValues();
-        }
+        startOperation(operateBtn.value);
     });
+});
+
+window.addEventListener('keydown', function (e) {
+    console.log(e.key);
+
+    const validOperators = ['+', '-', '*', 'x', '=', 'Enter', '/', '%' ];
+
+    //check if keyboard key pressed is a number
+    if (!isNaN(parseInt(e.key))) {
+        inputNumber(e.key);
+    } else if (e.key == '.') {
+        inputNumber(e.key);
+    } 
+    
+    //check if key pressed is a valid math operator
+    if (validOperators.includes(e.key)) {
+        if(e.key == 'Enter'){
+            startOperation('=');
+        }else {
+            startOperation(e.key);
+        }
+    }
+
+    if (e.key === 'Backspace') {
+        backSpace();
+    }
+
 });
