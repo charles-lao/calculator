@@ -102,6 +102,19 @@ clearBtn.addEventListener('click', () => {
     resetValues();
 });
 
+//backspace btn
+const delBtn = document.querySelector('#del-btn');
+delBtn.addEventListener('click', () => {
+    
+    if(currDisplayVal !== undefined && display.textContent !== undefined) {
+        let screenDisplay = display.textContent;
+
+        currDisplayVal = currDisplayVal.toString();
+        currDisplayVal = Number(currDisplayVal.slice(0, -1));
+        display.textContent = screenDisplay.slice(0, -1);
+    }  
+});
+
 const numBtns = document.querySelectorAll(".grey-btns");
 numBtns.forEach((numBtn) => {
     numBtn.addEventListener('click', () => {
