@@ -17,6 +17,10 @@ function multiply(x, y) {
     return decimalFilter(x * y);
 }
 
+function modulo(x, y) {
+    return (x % y);
+}
+
 function divide(x, y) {
     return decimalFilter(x / y);
 }
@@ -38,6 +42,10 @@ function operate(operator, x, y) {
         case '*':
             updateDisplay(multiply(x, y));
             storedVal = multiply(x, y);         
+            break;
+        case '%':
+            updateDisplay(modulo(x, y));
+            storedVal = modulo(x, y);         
             break;
         case '/':
             if(y === 0){
@@ -181,7 +189,7 @@ numBtns.forEach((numBtn) => {
     });
 });
 
-const operateBtns = document.querySelectorAll(".orange-btns");
+const operateBtns = document.querySelectorAll(".operator-btns");
 operateBtns.forEach((operateBtn) => {
     operateBtn.addEventListener('click', () => {
 
