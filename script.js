@@ -198,7 +198,6 @@ operateBtns.forEach((operateBtn) => {
 });
 
 window.addEventListener('keydown', function (e) {
-    console.log(e.key);
 
     const validOperators = ['+', '-', '*', 'x', '=', 'Enter', '/', '%' ];
 

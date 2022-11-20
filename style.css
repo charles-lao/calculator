@@ -75,22 +75,25 @@ header {
     margin: 2px;
 }
 
-.wide-btns {
-    flex: 2;
-    border-radius: 32%;
-}
-
 .orange-btns {
+    flex: 1;
     background-color: #ffa300;
 }
 
 .white-btns{
+    flex: 1;
     background-color: #dcddde;
     color: #000000;
 }
 
 .grey-btns {
+    flex: 1;
     background-color: #534e4e;
+}
+
+.wide-btns {
+    flex: 2;
+    border-radius: 32%;
 }
 
 footer {
